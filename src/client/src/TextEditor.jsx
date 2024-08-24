@@ -28,7 +28,7 @@ function TextEditor() {
   const [quill, setQuill] = useState(null);
   const { id: documentId } = useParams();
   const [title, setTitle] = useState('');
-  const [shareLink, setShareLink] = useState(`${import.meta.env.BACKEND_SERVER_URI}/document/${documentId}`);
+  const [shareLink, setShareLink] = useState(`${import.meta.env.VITE_BACKEND_SERVER_URI}/document/${documentId}`);
   const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -41,7 +41,7 @@ function TextEditor() {
           throw new Error('No token found');
         }
 
-        const response = await axios.get(`${import.meta.env.BACKEND_SERVER_URI}/api/user/data`, {
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_SERVER_URI}/api/user/data`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -55,7 +55,7 @@ function TextEditor() {
 
 
   useEffect(() => {
-    const s = io(`${import.meta.env.BACKEND_SERVER_URI}`);
+    const s = io(`${import.meta.env.VITE_BACKEND_SERVER_URI}`);
     setSocket(s);
 
     s.on('connect_error', (error) => {

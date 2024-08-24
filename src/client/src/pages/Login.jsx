@@ -21,7 +21,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${import.meta.env.BACKEND_SERVER_URI}/api/user/login`, formData);
+            const response = await axios.post(`${import.meta.env.VITE_BACKEND_SERVER_URI}/api/user/login`, formData);
             setFormData({
                 email: '',
                 password: ''
