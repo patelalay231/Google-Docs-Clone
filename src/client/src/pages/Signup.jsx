@@ -23,7 +23,7 @@ const Signup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${process.env.SERVER_URI}/api/user/register`, formData);
+            const response = await axios.post(`${import.meta.env.VITE_SERVER_URI}/api/user/register`, formData);
             setFormData({
                 username: '',
                 email: '',
