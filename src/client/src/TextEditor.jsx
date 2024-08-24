@@ -4,8 +4,8 @@ import 'quill/dist/quill.snow.css';
 import { io } from 'socket.io-client';
 import { useParams } from 'react-router-dom';
 import { FaShareAlt } from 'react-icons/fa'; // Importing a share icon from react-icons
-import {Button, EditableTitle,ShareModel} from './components'; // Import EditableTitle
-import {useNavigate} from 'react-router-dom';
+import { Button, EditableTitle, ShareModel } from './components'; // Importing components
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const toolbarOptions = [
@@ -33,44 +33,52 @@ function TextEditor() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
 
+  // Fetch user data
+  const fetchUser = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) throw new Error('No token found');
 
-    const fetchUser = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          throw new Error('No token found');
-        }
+      const response = await axios.get(`https://google-docs-clone-xi-teal.vercel.app/api/user/data`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-        const response = await axios.get(`https://google-docs-clone-xi-teal.vercel.app/api/user/data`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+      setUser(response.data.user.id);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-        setUser(response.data.user.id);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-
+  // Establish socket connection
   useEffect(() => {
-    const s = io(`https://google-docs-clone-xi-teal.vercel.app`);
-    setSocket(s);
+    const s = io('https://google-docs-clone-xi-teal.vercel.app', {
+      transports: ['websocket', 'polling'],
+      auth: {
+        token: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
 
     s.on('connect_error', (error) => {
       console.error('Socket connection error:', error);
+      setTimeout(() => {
+        s.connect();
+      }, 1000); // Retry connection after 1 second
     });
+
+    setSocket(s);
 
     return () => {
       s.disconnect();
     };
   }, []);
 
+  // Handle receiving changes
   useEffect(() => {
     if (quill == null || socket == null) return;
 
-    const handleReceiveChanges = (delta,title) => {
+    const handleReceiveChanges = (delta, title) => {
       setTitle(title);
       quill.updateContents(delta);
     };
@@ -82,6 +90,7 @@ function TextEditor() {
     };
   }, [socket, quill]);
 
+  // Load document
   useEffect(() => {
     if (quill == null || socket == null) return;
 
@@ -95,12 +104,13 @@ function TextEditor() {
     });
   }, [quill, socket, documentId]);
 
+  // Handle text changes
   useEffect(() => {
     if (quill == null || socket == null) return;
 
     const handleTextChange = (delta, oldDelta, source) => {
       if (source !== 'user') return;
-      socket.emit('send-changes', delta,title);
+      socket.emit('send-changes', delta, title);
     };
 
     quill.on('text-change', handleTextChange);
@@ -108,19 +118,22 @@ function TextEditor() {
     return () => {
       quill.off('text-change', handleTextChange);
     };
-  }, [quill, socket,title]);
+  }, [quill, socket, title]);
 
+  // Auto-save document periodically
   useEffect(() => {
     if (quill == null || socket == null) return;
+
     const interval = setInterval(() => {
-      socket.emit('save-document', quill.getContents(),title,user);
+      socket.emit('save-document', quill.getContents(), title, user);
     }, 1000);
 
     return () => {
       clearInterval(interval);
     };
-  }, [quill, socket,title,user]);
+  }, [quill, socket, title, user]);
 
+  // Initialize Quill editor
   const wrapperRef = useCallback((wrapper) => {
     if (wrapper == null) return;
 
@@ -140,14 +153,17 @@ function TextEditor() {
     setQuill(q);
   }, []);
 
+  // Handle title save
   const handleSave = (newTitle) => {
     setTitle(newTitle);
   };
 
+  // Handle share button click
   const handleShare = () => {
     setModalOpen(true);
   };
 
+  // Close share modal
   const handleCloseModal = () => {
     setModalOpen(false);
   };
@@ -158,20 +174,19 @@ function TextEditor() {
         <div>
           <EditableTitle title={title} onSave={handleSave} />
         </div>
-        <div className='flex gap-2'>
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center"
-          onClick={handleShare}
-        >
-          <FaShareAlt className="mr-2" /> {/* Sharing icon */}
-          Share
-        </button>
-        <Button onClick={() => {navigate('/')} }> Go to dashboard</Button>
+        <div className="flex gap-2">
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center"
+            onClick={handleShare}
+          >
+            <FaShareAlt className="mr-2" /> {/* Sharing icon */}
+            Share
+          </button>
+          <Button onClick={() => navigate('/')}>Go to dashboard</Button>
         </div>
       </nav>
       <div ref={wrapperRef} className="container" />
       <ShareModel isOpen={modalOpen} onClose={handleCloseModal} shareLink={shareLink} />
-      
     </>
   );
 }
