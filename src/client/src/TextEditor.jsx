@@ -7,7 +7,6 @@ import { FaShareAlt } from 'react-icons/fa'; // Importing a share icon from reac
 import {Button, EditableTitle,ShareModel} from './components'; // Import EditableTitle
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
-require('dotenv').config();
 
 const toolbarOptions = [
   ['bold', 'italic', 'underline', 'strike'],
