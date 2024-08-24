@@ -10,7 +10,7 @@ const Header = () => {
   const fetchUser = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(`https://google-docs-clone-xi-teal.vercel.app/api/user/data`, {
+      const response = await axios.get(`https://google-docs-clone-ssiw.onrender.com/api/user/data`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

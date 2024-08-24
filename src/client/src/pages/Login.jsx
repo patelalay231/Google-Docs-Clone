@@ -22,7 +22,7 @@ const Login = () => {
         e.preventDefault();
         try {
             console.log(import.meta.env.VITE_BACKEND_SERVER_URI);
-            const response = await axios.post(`https://google-docs-clone-xi-teal.vercel.app/api/user/login`, formData);
+            const response = await axios.post(`https://google-docs-clone-ssiw.onrender.com/api/user/login`, formData);
             setFormData({
                 email: '',
                 password: ''

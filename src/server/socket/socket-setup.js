@@ -4,12 +4,10 @@ const User = require('../schemas/user-schema');
 const setupSocketIO = (server) => {
     const socketIO = io(server, {
         cors: {
-          origin: 'https://google-docs-clone-xi-teal.vercel.app', // Your frontend URL
-          methods: ['GET', 'POST'],
-          credentials: true, // This is important if you're sending cookies with requests
-        },
-        transports: ['websocket', 'polling'], // Fallback to polling if WebSocket fails
-      });
+            origin: ['https://google-docs-clone-9yqk.vercel.app'], // Adjust as needed
+            methods: ['GET', 'POST']
+        }
+    });
 
     socketIO.on('connection', (socket) => {
 
