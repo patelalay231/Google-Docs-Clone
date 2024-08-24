@@ -34,7 +34,7 @@ const setupSocketIO = (server) => {
                 };
 
                 // Check if user is provided and not equal to the user who created the document
-                if (user && user !== document.userId.toString() && !document.sharedWith.includes(user)) {
+                if (user && user != document.userId && !document.sharedWith.includes(user)) {
                 // Add the $push operation only if user is unique and not the creator
                 updateObject.$push = {
                     sharedWith: user,
