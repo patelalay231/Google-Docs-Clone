@@ -7,7 +7,7 @@ const app = express();
 
 // Connect to the database
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/google-docs-clone';
-mongoose.connect(MONGO_URI)
+mongoose.connect(`${MONGO_URI}`)
   .then(() => console.log('Connected to MongoDB Atlas cluster'))
   .catch(err => console.error('Failed to connect to MongoDB', err));
 

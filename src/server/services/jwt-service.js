@@ -8,11 +8,11 @@ function createToken(user){
         _id: user._id,
         username: user.username,
     }
-    return jwt.sign(payload, JWT_SECRET);
+    return jwt.sign(payload, `${JWT_SECRET}`);
 }
 
 function verifyToken(token){
-    return jwt.verify(token, JWT_SECRET);
+    return jwt.verify(token, `${JWT_SECRET}`);
 }
 
 module.exports = {
