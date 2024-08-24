@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FaFileAlt } from "react-icons/fa"; 
 import { set } from "mongoose";
-
+require('dotenv').config();
 const DocumentList = () => {
   const navigate = useNavigate();
   const [documents, setDocuments] = useState([]);
@@ -11,7 +11,7 @@ const DocumentList = () => {
 
   const fetchDocuments = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/document/get-documents", {
+      const response = await axios.get(`${process.env.SERVER_URI}/api/document/get-documents`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -29,7 +29,7 @@ const DocumentList = () => {
 
   const handleCreateNewDocument = async () => {
     try {
-      const response = await axios.post("http://localhost:8000/api/document/create-document", null, {
+      const response = await axios.post(`${process.env.SERVER_URI}/api/document/create-document`, null, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -42,7 +42,7 @@ const DocumentList = () => {
 
   const handleStarDocument = async (documentId) => {
     try {
-      const response = await axios.post(`http://localhost:8000/api/document/star-document/${documentId}`, null, {
+      const response = await axios.post(`${process.env.SERVER_URI}/api/document/star-document/${documentId}`, null, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -59,7 +59,7 @@ const DocumentList = () => {
 
   const handleDeleteDocument = async (documentId) => {
     try {
-      await axios.delete(`http://localhost:8000/api/document/delete-document/${documentId}`, {
+      await axios.delete(`${process.env.SERVER_URI}/api/document/delete-document/${documentId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

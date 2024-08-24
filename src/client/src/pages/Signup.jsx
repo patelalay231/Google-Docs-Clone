@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { AuthCard, Form, Input, Button, Background, Notification } from '../components';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+require('dotenv').config();
 const Signup = () => {
     const [formData, setFormData] = useState({
         username: '',
@@ -23,7 +23,7 @@ const Signup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8000/api/user/register', formData);
+            const response = await axios.post(`${process.env.SERVER_URI}/api/user/register`, formData);
             setFormData({
                 username: '',
                 email: '',

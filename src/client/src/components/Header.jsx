@@ -10,7 +10,7 @@ const Header = () => {
   const fetchUser = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("http://localhost:8000/api/user/data", {
+      const response = await axios.get(`${process.env.SERVER_URI}/api/user/data`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

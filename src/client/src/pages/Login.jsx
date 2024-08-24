@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { AuthCard, Form, Input, Button, Background, Notification } from '../components';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+reqire('dotenv').config();
 const Login = () => {
     const [formData, setFormData] = useState({
         email: '',
@@ -22,7 +22,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8000/api/user/login', formData);
+            const response = await axios.post(`${process.env.SERVER_URI}/api/user/login`, formData);
             setFormData({
                 email: '',
                 password: ''

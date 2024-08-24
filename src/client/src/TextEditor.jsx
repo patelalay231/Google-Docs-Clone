@@ -7,6 +7,7 @@ import { FaShareAlt } from 'react-icons/fa'; // Importing a share icon from reac
 import {Button, EditableTitle,ShareModel} from './components'; // Import EditableTitle
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
+require('dotenv').config();
 
 const toolbarOptions = [
   ['bold', 'italic', 'underline', 'strike'],
@@ -28,7 +29,7 @@ function TextEditor() {
   const [quill, setQuill] = useState(null);
   const { id: documentId } = useParams();
   const [title, setTitle] = useState('');
-  const [shareLink, setShareLink] = useState(`http://localhost:5173/document/${documentId}`);
+  const [shareLink, setShareLink] = useState(`${process.env.SERVER_URI}/document/${documentId}`);
   const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -41,7 +42,7 @@ function TextEditor() {
           throw new Error('No token found');
         }
 
-        const response = await axios.get('http://localhost:8000/api/user/data', {
+        const response = await axios.get(`${process.env.SERVER_URI}/api/user/data`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -55,7 +56,7 @@ function TextEditor() {
 
 
   useEffect(() => {
-    const s = io('http://localhost:8000');
+    const s = io(`${process.env.SERVER_URI}`);
     setSocket(s);
 
     s.on('connect_error', (error) => {
