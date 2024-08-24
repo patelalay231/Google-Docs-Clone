@@ -9,7 +9,7 @@ const DocumentList = () => {
 
   const fetchDocuments = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_BACKEND_SERVER_URI}/api/document/get-documents`, {
+      const response = await axios.get(`https://google-docs-clone-xi-teal.vercel.app/api/document/get-documents`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -27,7 +27,7 @@ const DocumentList = () => {
 
   const handleCreateNewDocument = async () => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_SERVER_URI}/api/document/create-document`, null, {
+      const response = await axios.post(`https://google-docs-clone-xi-teal.vercel.app/api/document/create-document`, null, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -40,7 +40,7 @@ const DocumentList = () => {
 
   const handleStarDocument = async (documentId) => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_SERVER_URI}/api/document/star-document/${documentId}`, null, {
+      const response = await axios.post(`https://google-docs-clone-xi-teal.vercel.app/api/document/star-document/${documentId}`, null, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -57,7 +57,7 @@ const DocumentList = () => {
 
   const handleDeleteDocument = async (documentId) => {
     try {
-      await axios.delete(`${import.meta.env.VITE_BACKEND_SERVER_URI}/api/document/delete-document/${documentId}`, {
+      await axios.delete(`https://google-docs-clone-xi-teal.vercel.app/api/document/delete-document/${documentId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

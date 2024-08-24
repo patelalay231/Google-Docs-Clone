@@ -22,7 +22,7 @@ const Signup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${import.meta.env.VITE_BACKEND_SERVER_URI}/api/user/register`, formData);
+            const response = await axios.post(`https://google-docs-clone-xi-teal.vercel.app/api/user/register`, formData);
             setFormData({
                 username: '',
                 email: '',
