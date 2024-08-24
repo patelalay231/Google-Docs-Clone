@@ -21,6 +21,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            console.log(import.meta.env.VITE_BACKEND_SERVER_URI);
             const response = await axios.post(`${import.meta.env.VITE_BACKEND_SERVER_URI}/api/user/login`, formData);
             setFormData({
                 email: '',
