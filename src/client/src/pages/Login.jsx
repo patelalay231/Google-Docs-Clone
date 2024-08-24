@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { AuthCard, Form, Input, Button, Background, Notification } from '../components';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-reqire('dotenv').config();
 const Login = () => {
     const [formData, setFormData] = useState({
         email: '',

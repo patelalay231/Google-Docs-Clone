@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { AuthCard, Form, Input, Button, Background, Notification } from '../components';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-require('dotenv').config();
 const Signup = () => {
     const [formData, setFormData] = useState({
         username: '',
