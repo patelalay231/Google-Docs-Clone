@@ -4,7 +4,7 @@ const User = require('../schemas/user-schema');
 const setupSocketIO = (server) => {
     const socketIO = io(server, {
         cors: {
-            origin: ['http://localhost:5173'], // Adjust as needed
+            origin: ['https://google-docs-clone-9yqk.vercel.app/'], // Adjust as needed
             methods: ['GET', 'POST']
         }
     });
