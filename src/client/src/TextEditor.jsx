@@ -28,7 +28,7 @@ function TextEditor() {
   const [quill, setQuill] = useState(null);
   const { id: documentId } = useParams();
   const [title, setTitle] = useState('');
-  const [shareLink, setShareLink] = useState(`https://google-docs-clone-ssiw.onrender.com/document/${documentId}`);
+  const [shareLink, setShareLink] = useState(`https://google-docs-clone-9yqk.vercel.app/document/${documentId}`);
   const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
