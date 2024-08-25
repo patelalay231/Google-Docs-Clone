@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 const Login = () => {
     const [formData, setFormData] = useState({
-        email: '',
-        password: ''
+        email: 'example@gmail.com',
+        password: '123456'
     });
     const [notification, setNotification] = useState({ message: '', type: '' });
 
